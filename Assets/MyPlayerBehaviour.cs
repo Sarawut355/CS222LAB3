@@ -6,13 +6,20 @@ public class MyPlayerBehaviour : MonoBehaviour
 {
     public float speed = 1.0f;
     //public List<WeaponBehaviour> weapons = new List<WeaponBehaviour>();
-    public WeaponBehaviour[] weapons = new WeaponBehaviour[10];
+    public WeaponBehaviour[] weapons;
+    public int indexs;
     public int selectedWeaponIndex;
     // Start is called before the first frame update
     void Start()
     {
         References.thePlayer = gameObject;
         selectedWeaponIndex = 0;
+        weapons = new WeaponBehaviour[10];
+        indexs = 0;
+        for (int i = 0; i < weapons.Length;i++ ) 
+        {
+           weapons[i] = new WeaponBehaviour();
+       }
     }
 
     // Update is called once per frame
@@ -86,15 +93,9 @@ public class MyPlayerBehaviour : MonoBehaviour
         {
             //Add it to our internal list
             //weapons.Add(theirWeapon);
-            for (int index = 0; index < weapons.Length; index++)
-            {
-                if (weapons[index] == null)
-                {
-                    weapons[index] = theirWeapon;
-                    
-                }
-
-            }
+           
+            weapons[indexs] = theirWeapon;
+      
             //Move it to our location
             theirWeapon.transform.position = transform.position;
             theirWeapon.transform.rotation = transform.rotation;
@@ -103,8 +104,12 @@ public class MyPlayerBehaviour : MonoBehaviour
             theirWeapon.transform.SetParent(transform);
 
             //Select it!
-            ChangeWeaponIndex(weapons.Length - 1);
-
+           //ChangeWeaponIndex(weapons.Length - 1);
+            indexs++;
+            if (indexs == 6)
+            {
+                indexs = 0;
+            }
 
         }
     }
